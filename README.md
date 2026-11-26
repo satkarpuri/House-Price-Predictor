@@ -89,12 +89,12 @@ Eight models were compared: Linear Regression, Ridge, Lasso, ElasticNet, Support
 
 | Metric | Value |
 |---|---|
-| RMSE (log price) | **TODO** |
-| RMSE ($) | **TODO** |
-| MAE ($) | **TODO** |
-| R² | **TODO** |
+| RMSE (log price) | 0.11862811201536988 |
+| RMSE ($) | 19470.109822082795 |
+| MAE ($) | 14111.510133727748 |
+| R² | 0.9165218868356617 |
 
-*(Fill these in from the final evaluation cell of the notebook before publishing.)*
+
 
 I also checked the residual plot and the 10 largest prediction errors. **TODO: add 2 to 3 sentences about what the worst predictions have in common** (for example neighborhood, overall quality, or sale condition).
 
@@ -136,61 +136,6 @@ Living area and build quality dominate, followed by neighborhood.
 - The skew and near-constant-column checks used the full training set before the split. This is an unsupervised decision and a small source of leakage.
 - No time-based validation: all years are mixed in the split.
 
----
-
-## Repository structure
-
-```
-house-price-prediction/
-├── notebooks/
-│   └── house_price_prediction.ipynb
-├── models/
-│   └── house_price_pipeline.joblib
-├── requirements.txt
-└── README.md
-```
-
----
-
-## How to run
-
-1. Clone the repository and create an environment:
-   ```bash
-   git clone https://github.com/<your-username>/house-price-prediction.git
-   cd house-price-prediction
-   python -m venv .venv
-   source .venv/bin/activate        # Windows: .venv\Scripts\activate
-   pip install -r requirements.txt
-   ```
-2. Download `train.csv` from the Kaggle competition [House Prices - Advanced Regression Techniques](https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques) and place it in a `data/` folder (you may need to join the competition to download).
-3. Open `notebooks/house_price_prediction.ipynb` and run all cells.
-
----
-
-## Using the saved model
-
-The saved pipeline expects the same columns the notebook produces (after the `'None'` fills and the feature engineering step) and **predicts log price**, so convert back with `np.exp`:
-
-```python
-import joblib
-import numpy as np
-
-model = joblib.load("models/house_price_pipeline.joblib")
-price = np.exp(model.predict(X_new))   # X_new: DataFrame with the engineered columns
-```
-
----
-
-## Future work
-
-- Move the cleaning and feature engineering code into a reusable Python module
-- Serve the model as an API with FastAPI, plus a simple front end
-- Try stacking the top models and more extensive feature engineering
-- Evaluate with a time-based split to check for drift across sale years
-
----
-
-## Acknowledgements
 
 Dataset: Ames Housing data compiled by Dean De Cock (2011), distributed through the Kaggle competition *House Prices - Advanced Regression Techniques*.
 >>>>>>> 3ed6a9e (Added house price prediction project)
